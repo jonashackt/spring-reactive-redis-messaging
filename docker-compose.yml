@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+
+ springredis:
+  build: .
+  ports:
+   - "8080:8080"
+  tty:
+    true
+  restart:
+    unless-stopped
+
+ redis:
+  image: redis:latest
+  ports:
+   - "6379:6379"
+  restart:
+    unless-stopped
