@@ -1,5 +1,6 @@
 spring-boot-redis
 ======================================================================================
+[![Build Status](https://travis-ci.org/jonashackt/spring-boot-redis.svg?branch=master)](https://travis-ci.org/jonashackt/spring-boot-redis)
 
 Example project showing how to interact with Redis using Spring Boot 
 
