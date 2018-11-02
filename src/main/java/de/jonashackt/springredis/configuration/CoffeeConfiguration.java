@@ -6,12 +6,33 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.ReactiveRedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-public class SpringredisConfig {
+public class CoffeeConfiguration {
+
+/*    @Bean
+    public ReactiveRedisConnectionFactory connectionFactory() {
+        return new LettuceConnectionFactory("localhost", 6379);
+    }*/
+
+    @Bean
+    public ReactiveRedisTemplate<String, String> reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
+        return new ReactiveRedisTemplate<>(factory, RedisSerializationContext.string());
+    }
+
+    @Bean
+    ReactiveRedisMessageListenerContainer container(ReactiveRedisConnectionFactory factory) {
+
+        ReactiveRedisMessageListenerContainer container = new ReactiveRedisMessageListenerContainer(factory);
+        container.receive(ChannelTopic.of(Channel.COFFEES.topicName()));
+
+        return container;
+    }
 
     @Bean
     ReactiveRedisOperations<String, Coffee> redisOperations(ReactiveRedisConnectionFactory factory) {

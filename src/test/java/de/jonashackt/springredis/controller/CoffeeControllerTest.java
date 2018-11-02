@@ -1,6 +1,6 @@
 package de.jonashackt.springredis.controller;
 
-import de.jonashackt.springredis.SpringredisApplication;
+import de.jonashackt.springredis.CoffeeApplication;
 import org.apache.http.HttpStatus;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        classes = SpringredisApplication.class,
+        classes = CoffeeApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CoffeeControllerTest {
 
