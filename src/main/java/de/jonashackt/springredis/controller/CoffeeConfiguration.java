@@ -1,4 +1,4 @@
-package de.jonashackt.springredis.configuration;
+package de.jonashackt.springredis.controller;
 
 import de.jonashackt.springredis.domain.Coffee;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +21,11 @@ public class CoffeeConfiguration {
     }*/
 
     @Bean
+    ChannelTopic topic() {
+        return new ChannelTopic("coffees:queue");
+    }
+
+    @Bean
     public ReactiveRedisTemplate<String, String> reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
         return new ReactiveRedisTemplate<>(factory, RedisSerializationContext.string());
     }
@@ -29,7 +34,7 @@ public class CoffeeConfiguration {
     ReactiveRedisMessageListenerContainer container(ReactiveRedisConnectionFactory factory) {
 
         ReactiveRedisMessageListenerContainer container = new ReactiveRedisMessageListenerContainer(factory);
-        container.receive(ChannelTopic.of(Channel.COFFEES.topicName()));
+        container.receive(topic());
 
         return container;
     }

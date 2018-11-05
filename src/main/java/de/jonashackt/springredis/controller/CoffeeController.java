@@ -1,10 +1,10 @@
 package de.jonashackt.springredis.controller;
 
-import de.jonashackt.springredis.configuration.Channel;
 import de.jonashackt.springredis.domain.Coffee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.ReactiveSubscription;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -26,10 +26,13 @@ public class CoffeeController {
     private final ReactiveRedisOperations<String, Coffee> coffeeOps;
 
     @Autowired
-    private ReactiveRedisTemplate<String, String> template;
+    private ReactiveRedisTemplate<String, String> reactiveTemplate;
 
     @Autowired
-    private ReactiveRedisMessageListenerContainer listenerContainer;
+    private ReactiveRedisMessageListenerContainer reactiveMsgListenerContainer;
+
+    @Autowired
+    private ChannelTopic topic;
 
     CoffeeController(ReactiveRedisOperations<String, Coffee> coffeeOps) {
         this.coffeeOps = coffeeOps;
@@ -45,18 +48,24 @@ public class CoffeeController {
     @PostMapping("/coffee/{variety}")
     public Mono<Long> addCoffee(@PathVariable String variety) {
         LOG.info("New Coffee with variety '" + variety + "' added to Redis.");
-        return template.opsForList().leftPush(UUID.randomUUID().toString(), variety);
+        return reactiveTemplate.opsForList().leftPush(UUID.randomUUID().toString(), variety);
     }
 
     @PostMapping("/message/coffee/{variety}")
     public Mono<Long> sendCoffeeMessage(@PathVariable String variety) {
-        LOG.info("New Coffee with variety '" + variety + "' send to Channel '" + Channel.COFFEES.topicName() + "'.");
-        return template.convertAndSend(Channel.COFFEES.topicName(), variety);
+        LOG.info("New Coffee with variety '" + variety + "' send to Channel '" + topic.getTopic() + "'.");
+        return reactiveTemplate.convertAndSend(topic.getTopic(), variety);
     }
 
-    @GetMapping("/message/coffee")
-    public Flux<?> receiveCoffeeMessages() {
-        LOG.info("Receiving Coffee Messages from Channel '" + Channel.COFFEES.topicName() + "'.");
-        return listenerContainer.receive(ChannelTopic.of(Channel.COFFEES.topicName()));
+    @GetMapping("/message/coffees")
+    public Flux<String> receiveCoffeeMessages() {
+        LOG.info("Starting to receive Coffee Messages from Channel '" + topic.getTopic() + "'.");
+        return reactiveMsgListenerContainer
+                .receive(topic)
+                .map(ReactiveSubscription.Message::getMessage)
+                .map(msg -> {
+                    LOG.info("New Message received: '" + msg.toString() + "'.");
+                    return msg.toString() + "\n";
+                });
     }
 }

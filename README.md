@@ -51,9 +51,30 @@ Only if one uses channels and subscribes to it on Redis, these channels are pres
 To see the current channels in the Redis Docker container, check:
 
 ```
-docker exec -it redisContainerName sh`
+docker exec -it redisContainerName sh
 
 redis-cli
 
 pubsub channels
-``
+``` 
+
+
+### REST endpoints
+
+Spring Reactive WebClient: https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#webtestclient-tests
+
+We need to use a curl / Postman / httpie to open up a HTTP connection to retrieve Server Side Events (SSE) from our channel subscriber:
+
+```
+curl -v http://localhost:8080/message/coffees
+```
+
+Now messages could be retrieved from the Redis Pub/Sub channel `coffees:queue`.
+
+On a second terminal windows we can now publish messages to Redis :
+
+```
+http POST http://localhost:8080/message/coffee/fooBarCoffee
+```
+
+See https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux#the-web-the-final-frontier for more details on how to implement Spring Webflux style REST endpoints.
