@@ -1,6 +1,6 @@
-spring-boot-redis
+spring-reactive-redis-messaging
 ======================================================================================
-[![Build Status](https://travis-ci.org/jonashackt/spring-boot-redis.svg?branch=master)](https://travis-ci.org/jonashackt/spring-boot-redis)
+[![Build Status](https://travis-ci.org/jonashackt/spring-reactive-redis-messaging.svg?branch=master)](https://travis-ci.org/jonashackt/spring-reactive-redis-messaging)
 
 Example project showing how to interact with Redis using Spring Boot 
 
@@ -78,3 +78,49 @@ http POST http://localhost:8080/message/coffee/fooBarCoffee
 ```
 
 See https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux#the-web-the-final-frontier for more details on how to implement Spring Webflux style REST endpoints.
+
+
+# Links
+
+### Redis
+
+https://github.com/eugenp/tutorials/blob/master/persistence-modules/spring-data-redis/src/test/java/com/baeldung/spring/data/reactive/redis/template/RedisTemplateListOpsIntegrationTest.java
+
+https://spring.io/guides/gs/messaging-redis/
+
+https://www.baeldung.com/spring-data-redis-pub-sub
+
+
+### Redis Reactive Messaging
+
+https://spring.io/guides/gs/spring-data-reactive-redis/
+
+https://docs.spring.io/spring-data/data-redis/docs/2.1.1.RELEASE/reference/html/#redis:reactive
+
+https://www.baeldung.com/java-redis-lettuce
+
+
+### RabbitMQ / AMQP Messaging
+
+https://www.baeldung.com/spring-amqp-reactive
+
+
+### Reactive WebFlux Stack
+
+https://developer.okta.com/blog/2018/09/24/reactive-apis-with-spring-webflux#the-web-the-final-frontier
+
+https://spring.io/guides/gs/reactive-rest-service/
+
+https://www.baeldung.com/spring-5-webclient
+
+https://docs.spring.io/spring/docs/current/spring-framework-reference/testing.html#webtestclient-tests
+
+https://dzone.com/articles/reactive-programming-with-spring-webflux
+
+https://www.baeldung.com/spring-5-functional-web
+
+https://medium.com/@cheron.antoine/tuto-building-a-reactive-restful-api-with-spring-webflux-java-258fd4dbae41
+
+https://stackoverflow.com/questions/50740795/how-to-wait-for-all-requests-to-complete-with-spring-5-webclient
+
+
