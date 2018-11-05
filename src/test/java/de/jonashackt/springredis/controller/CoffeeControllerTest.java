@@ -33,7 +33,7 @@ public class CoffeeControllerTest {
     @ClassRule
     public static DockerComposeContainer services =
             new DockerComposeContainer(new File("docker-compose.yml"))
-                    .withExposedService("controller", 6379, Wait.forListeningPort());
+                    .withExposedService("redis", 6379, Wait.forListeningPort());
 
 
     @Test
