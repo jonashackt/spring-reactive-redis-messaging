@@ -1,6 +1,6 @@
 spring-reactive-redis-messaging
 ======================================================================================
-[![Build Status](https://travis-ci.org/jonashackt/spring-reactive-redis-messaging.svg?branch=master)](https://travis-ci.org/jonashackt/spring-reactive-redis-messaging)
+[![Build Status](https://travis-ci.com/jonashackt/spring-reactive-redis-messaging.svg?branch=master)](https://travis-ci.com/jonashackt/spring-reactive-redis-messaging)
 [![renovateenabled](https://img.shields.io/badge/renovate-enabled-yellow)](https://renovatebot.com)
 
 Example project showing how to interact with Redis using Spring Boot 
