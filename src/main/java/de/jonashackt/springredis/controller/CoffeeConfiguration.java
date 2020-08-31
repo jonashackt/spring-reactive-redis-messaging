@@ -26,11 +26,6 @@ public class CoffeeConfiguration {
     }
 
     @Bean
-    public ReactiveRedisTemplate<String, String> reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
-        return new ReactiveRedisTemplate<>(factory, RedisSerializationContext.string());
-    }
-
-    @Bean
     ReactiveRedisMessageListenerContainer container(ReactiveRedisConnectionFactory factory) {
 
         ReactiveRedisMessageListenerContainer container = new ReactiveRedisMessageListenerContainer(factory);
